@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useMemo, useState} from 'react';
 import { useLogsStore } from '@/store/logsStore';
 import { Card, Text, Button, Group, Pagination } from '@mantine/core';
 import { Trash2 } from 'lucide-react';
@@ -7,15 +7,20 @@ const Logs: FC = () => {
     const { logs, clearLogs, addLog } = useLogsStore();
     const [currentPage, setCurrentPage] = useState(1);
     const logsPerPage = 10;
-
+    console.log(logs)
     useEffect(() => {
         addLog('PAGE_VIEW', 'Viewed logs page', 'Logs');
-    }, []);
+    }, [addLog]);
 
-    const indexOfLastLog = currentPage * logsPerPage;
-    const indexOfFirstLog = indexOfLastLog - logsPerPage;
-    const currentLogs = logs.slice(indexOfFirstLog, indexOfLastLog);
-    const totalPages = Math.ceil(logs.length / logsPerPage);
+    const { currentLogs, totalPages } = useMemo(() => {
+        const totalPagesCalc = Math.ceil(logs.length / logsPerPage) || 1;
+        const startIndex = (currentPage - 1) * logsPerPage;
+        const endIndex = startIndex + logsPerPage;
+        return {
+            currentLogs: logs.slice(startIndex, endIndex),
+            totalPages: totalPagesCalc,
+        };
+    }, [logs, currentPage]);
 
     return (
         <div>

@@ -19,7 +19,7 @@ const Users: FC = () => {
 
     useEffect(() => {
         addLog('PAGE_VIEW', 'Viewed users page', 'Users');
-    }, [addLog]);
+    }, []);
 
     const { data: users, isLoading, error } = useQuery({
         queryKey: ['users'],

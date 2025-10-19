@@ -22,7 +22,7 @@ const UserDetail: FC = () => {
 
     useEffect(() => {
             addLog('USER_VIEW', `Viewed user: ${user?.name}`, 'UserDetail');
-    }, [addLog]);
+    }, []);
 
 
     if (isLoading) {
@@ -32,7 +32,7 @@ const UserDetail: FC = () => {
     if (error || !user) {
         return (
             <div className="text-center py-8">
-                <Text color="red">User not found</Text>
+                <Text c="red">User not found</Text>
                 <Button onClick={() => navigate('/users')} className="mt-4">
                     Back to Users
                 </Button>

@@ -1,23 +1,20 @@
 import {FC, useEffect} from 'react';
 import { useLogsStore } from '@/store/logsStore';
-import { Card, Text, Group, Button } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Card, Text, Group } from '@mantine/core';
 import {
     Users,
     FileText,
     Activity,
     Eye,
-    ArrowRight
 } from 'lucide-react';
 
 const Dashboard: FC = () => {
     const { logs, addLog } = useLogsStore();
-    const navigate = useNavigate();
 
     useEffect(() => {
         console.log('mobini');
         addLog('PAGE_VIEW', 'Viewed dashboard', 'Dashboard');
-    }, [addLog]);
+    }, []);
 
     const stats = [
         {
@@ -64,7 +61,7 @@ const Dashboard: FC = () => {
                         <Card key={stat.title} shadow="sm" padding="lg" radius="md" withBorder>
                             <Group justify="space-between">
                                 <div>
-                                    <Text size="sm" color={stat.color}>
+                                    <Text size="sm" c={stat.color}>
                                         {stat.title}
                                     </Text>
                                     <Text size="xl" fw={500} className={COlOR[stat.color]}>
@@ -78,43 +75,6 @@ const Dashboard: FC = () => {
                 })}
             </div>
 
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-                <div className="flex justify-between items-center mb-4">
-                    <Text size="xl" fw={500}>
-                        Recent Activity
-                    </Text>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        rightSection={<ArrowRight size={16} />}
-                        onClick={() => navigate('/logs')}
-                    >
-                        View All
-                    </Button>
-                </div>
-                <div className="space-y-3">
-                    {logs.slice(0, 5).map((log) => (
-                        <div key={log.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                            <div>
-                                <Text size="sm" fw={500}>
-                                    {log.action}
-                                </Text>
-                                <Text size="xs" c="dimmed">
-                                    {log.details} • {log.page}
-                                </Text>
-                            </div>
-                            <Text size="xs" c="dimmed">
-                                {log.timestamp.toLocaleString()}
-                            </Text>
-                        </div>
-                    ))}
-                    {logs.length === 0 && (
-                        <Text size="sm" c="dimmed" className="text-center py-4">
-                            No activity yet
-                        </Text>
-                    )}
-                </div>
-            </Card>
         </div>
     );
 };

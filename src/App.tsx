@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -11,7 +11,6 @@ import Dashboard from '@/pages/Dashboard';
 import Users from '@/pages/Users';
 import UserDetail from '@/pages/UserDetail';
 import Logs from '@/pages/Logs';
-import { useLogsStore } from '@/store/logsStore';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
@@ -33,11 +32,7 @@ const routes = [
 ];
 
 const AppContent: FC = () => {
-    const { addLog } = useLogsStore();
 
-    useEffect(() => {
-        addLog('PAGE_VIEW', 'Application initialized', 'App');
-    }, [addLog]);
 
     return (
         <Router>

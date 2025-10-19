@@ -14,7 +14,7 @@ export const useLogsStore = create<LogsState>()(
             logs: [],
             addLog: (action: string, details: string, page: string) => {
                 const newLog: LogEntry = {
-                    id: Date.now().toString(),
+                    id: crypto.randomUUID(),
                     action,
                     timestamp: new Date(),
                     details,
@@ -22,7 +22,10 @@ export const useLogsStore = create<LogsState>()(
                 };
                 set({ logs: [newLog, ...get().logs] });
             },
-            clearLogs: () => set({ logs: [] }),
+            clearLogs: () => {
+                set({ logs: [] });
+                localStorage.removeItem('logs-storage');
+            },
         }),
         {
             name: 'logs-storage',
