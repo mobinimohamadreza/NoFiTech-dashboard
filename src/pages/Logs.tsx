@@ -7,10 +7,7 @@ const Logs: FC = () => {
     const { logs, clearLogs, addLog } = useLogsStore();
     const [currentPage, setCurrentPage] = useState(1);
     const logsPerPage = 10;
-    console.log(logs)
-    useEffect(() => {
-        addLog('PAGE_VIEW', 'Viewed logs page', 'Logs');
-    }, [addLog]);
+
 
     const { currentLogs, totalPages } = useMemo(() => {
         const totalPagesCalc = Math.ceil(logs.length / logsPerPage) || 1;
@@ -21,6 +18,11 @@ const Logs: FC = () => {
             totalPages: totalPagesCalc,
         };
     }, [logs, currentPage]);
+
+    useEffect(() => {
+        addLog('PAGE_VIEW', 'Viewed logs page', 'Logs');
+    }, []);
+
 
     return (
         <div>
